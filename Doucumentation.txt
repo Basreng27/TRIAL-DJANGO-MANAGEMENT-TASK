@@ -1,0 +1,16 @@
+ => Create Virtual Environment
+    python -m venv env
+=> Activate Virtual Environment
+    env\Scripts\activate
+=> Install Django
+    pip install django
+=> Install Django Rest Framework
+    pip install django-ninja
+=> Install MSSQL/SQL Server
+    pip install mssql-django
+=> Install JWT Token
+    pip install simplejwt
+=> Create Project
+    django-admin startproject <name_folder>
+=> Create Application
+    django-admin startapp <name_file>
