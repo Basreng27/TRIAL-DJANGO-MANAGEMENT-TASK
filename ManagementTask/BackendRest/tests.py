@@ -1,3 +1,4 @@
-from django.test import TestCase
+from .modules.auth.unittest import *
 
-# Create your tests here.
+RegisterSerializerTestCase
+LoginSerializerTestCase

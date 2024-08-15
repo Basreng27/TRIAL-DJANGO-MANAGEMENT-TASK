@@ -27,3 +27,6 @@
     pip freeze > requirements.txt
 => Run Requirements
     pip install -r requirements.txt
+
+=> Run Unit Test
+    python manage.py test
