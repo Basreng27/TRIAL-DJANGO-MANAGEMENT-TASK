@@ -1,0 +1,13 @@
+# Ignore All File In Folder
+/env/
+
+# Ignore All File With Extension
+*.log
+*.tmp
+
+# Ignore File
+ManagementTask/settings.py
+
+# Ignore File Except important.log
+# *.log
+# !important.log

@@ -9,8 +9,14 @@
 => Install MSSQL/SQL Server
     pip install mssql-django
 => Install JWT Token
-    pip install simplejwt
+    pip install djangorestframework-simplejwt
 => Create Project
     django-admin startproject <name_folder>
 => Create Application
     django-admin startapp <name_file>
+=> Install Pillow For ImageField
+    python -m pip install Pillow
+
+
+=> Add GitIgnore
+    touch .gitignore
