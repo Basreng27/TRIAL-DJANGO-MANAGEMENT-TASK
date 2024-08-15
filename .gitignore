@@ -1,6 +1,6 @@
 # Ignore All File In Folder
 /env/
-*/__pycache__/
+**/__pycache__/
 
 # Ignore All File With Extension
 *.log
