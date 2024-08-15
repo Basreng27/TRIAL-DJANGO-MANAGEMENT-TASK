@@ -22,3 +22,8 @@
     touch .gitignore
 => Update Git Cahce
     git rm -r --cached .
+
+=> Create Requirements
+    pip freeze > requirements.txt
+=> Run Requirements
+    pip install -r requirements.txt
