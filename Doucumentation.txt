@@ -20,3 +20,5 @@
 
 => Add GitIgnore
     touch .gitignore
+=> Update Git Cahce
+    git rm -r --cached .
