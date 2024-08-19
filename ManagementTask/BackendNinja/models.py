@@ -46,3 +46,8 @@ class Labels(models.Model):
 class TaskLabels(models.Model):
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     label_id = models.ForeignKey(Labels, on_delete=models.CASCADE)
+    
+class BlacklistedToken(models.Model):
+    token = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    

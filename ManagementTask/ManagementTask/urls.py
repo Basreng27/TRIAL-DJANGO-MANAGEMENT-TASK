@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from BackendNinja.api import api
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-rest/', include('BackendRest.urls'), name='api-rest')
+    path('api-rest/', include('BackendRest.urls'), name='api-rest'),
+    path('api-ninja/', api.urls, name='api-ninja'),
 ]

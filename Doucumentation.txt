@@ -17,7 +17,6 @@
 => Install Pillow For ImageField
     python -m pip install Pillow
 
-
 => Add GitIgnore
     touch .gitignore
 => Update Git Cahce
@@ -30,3 +29,6 @@
 
 => Run Unit Test
     python manage.py test
+
+=> Install Requests For URL
+    pip install requests
