@@ -16,16 +16,15 @@ class LoginSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
         
-        refresh = self.get_token(self.user)
+        refresh_rest = self.get_token(self.user)
         
         data = {
             'username': self.user.username,
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
+            'refresh_rest': str(refresh_rest),
+            'access_rest': str(refresh_rest.access_token)
         }
         
-        # return response_json(True, status.HTTP_200_OK, None, data)
-        return data
+        return response_json(True, status.HTTP_200_OK, None, data)
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -42,7 +41,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return payload
     
     def create(self, validated_data):
-        # Delete Confirm Password
+        # Remove Confirm Password
         validated_data.pop('confirm_password')
         
         user = User(
@@ -58,9 +57,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             user.save()
             
             logger.info(f"=== User created: {user.username}")
-            
-            # return response_json(True, status.HTTP_201_CREATED, None, UserSerializer(user).data)
-            return user
+
+            return response_json(True, status.HTTP_201_CREATED, None, user)
         except DatabaseError as db_error:
             logger.error(f"=== Database error: {db_error}")
             
