@@ -30,7 +30,7 @@ def login_process(request, payload):
             "token": token
         }
         
-        return response_json(True, status.HTTP_400_BAD_REQUEST, None, data)
+        return response_json(True, status.HTTP_200_OK, None, data)
     except User.DoesNotExist:
         return response_json(False, status.HTTP_400_BAD_REQUEST, "Username or Password is Incorrect", token)
 
