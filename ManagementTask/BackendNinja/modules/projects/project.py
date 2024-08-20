@@ -3,12 +3,17 @@ from ManagementTask.helpers import response_json
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.db import IntegrityError, DatabaseError
-from django.shortcuts import get_object_or_404
+# from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
-def project_list(request, id = None):
+def project_list(request, id=None):
     if id :
-        project = get_object_or_404(Projects, id=id)
+        # project = get_object_or_404(Projects, id=id)
+        
+        try:
+            project = Projects.objects.get(id=id)
+        except Projects.DoesNotExist:
+            return response_json(False, status.HTTP_404_NOT_FOUND, "Project Doesn't Exist", None)
         
         data = {
             "id": project.id,
@@ -35,7 +40,7 @@ def project_list(request, id = None):
     
     return response_json(True, status.HTTP_200_OK, None, data)
 
-def project_store(request, payload, id = None):
+def project_store(request, payload, id=None):
     try:
         try:
             user = User.objects.get(id=payload.user_id)
@@ -43,7 +48,10 @@ def project_store(request, payload, id = None):
             return response_json(False, status.HTTP_404_NOT_FOUND, "User Doesn't Exist", None)
         
         if id :
-            project = get_object_or_404(Projects, id=id)
+            try:
+                project = Projects.objects.get(id=id)
+            except Projects.DoesNotExist:
+                return response_json(False, status.HTTP_404_NOT_FOUND, "Project Doesn't Exist", None)
             
             project.user_id = user
             project.name = payload.name
@@ -56,6 +64,7 @@ def project_store(request, payload, id = None):
                 user_id=user,
                 name=payload.name,
                 description=payload.description,
+                created_at=timezone.now(),
             )
 
         data = {
@@ -73,7 +82,10 @@ def project_store(request, payload, id = None):
         return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None)
     
 def project_delete(request, id):
-    data = get_object_or_404(Projects, id=id)
+    try:
+        data = Projects.objects.get(id=id)
+    except Projects.DoesNotExist:
+        return response_json(False, status.HTTP_404_NOT_FOUND, "Project Doesn't Exist", None)
     
     try:
         data.delete()
