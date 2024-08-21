@@ -23,14 +23,14 @@ class Tasks(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
-# Table Categories:
+# Table Categories: (Done)
 class Categories(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
-# Table TaskCategories:
+# Table TaskCategories: (Done)
 class TaskCategories(models.Model):
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     category_id = models.ForeignKey(Categories, on_delete=models.CASCADE)
