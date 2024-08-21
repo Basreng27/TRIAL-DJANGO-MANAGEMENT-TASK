@@ -16,6 +16,8 @@ from .modules.task_categories.schema import TaskCategorySchema
 from .modules.task_categories.task_category import task_category_list, task_category_store, task_category_delete
 from .modules.labels.schema import LabelSchema
 from .modules.labels.label import label_list, label_store, label_delete
+from .modules.task_labels.schema import TaskLabelSchema
+from .modules.task_labels.task_label import task_label_list, task_label_store, task_label_delete
 
 api = NinjaAPI()
 
@@ -148,3 +150,24 @@ def update(request, payload:LabelSchema, id: int):
 @api.delete("/label/{id}", auth=auth)
 def update(request, id: int):
     return label_delete(request, id=id)
+
+# Task Category
+@api.get("/task_label", auth=auth)
+def get_list(request):
+    return task_label_list(request)
+
+@api.get("/task_label/{id}", auth=auth)
+def get(request, id: int):
+    return task_label_list(request, id=id)
+
+@api.post("/task_label", auth=auth)
+def create(request, payload:TaskLabelSchema):
+    return task_label_store(request, payload=payload)
+
+@api.put("/task_label/{id}", auth=auth)
+def update(request, payload:TaskLabelSchema, id: int):
+    return task_label_store(request, payload=payload, id=id)
+
+@api.delete("/task_label/{id}", auth=auth)
+def update(request, id: int):
+    return task_label_delete(request, id=id)
