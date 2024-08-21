@@ -68,6 +68,7 @@ def project_store(request, payload, id=None):
             )
 
         data = {
+            "id": project.id,
             "user_id": project.user_id.id,
             "name": project.name,
             "description": project.description,

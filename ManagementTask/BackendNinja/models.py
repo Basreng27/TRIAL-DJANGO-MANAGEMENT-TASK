@@ -11,7 +11,7 @@ class Projects(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
-# Table Tasks:
+# Table Tasks: (Done)
 class Tasks(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -50,4 +50,3 @@ class TaskLabels(models.Model):
 class BlacklistedToken(models.Model):
     token = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    

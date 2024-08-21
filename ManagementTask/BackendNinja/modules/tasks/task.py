@@ -13,6 +13,7 @@ def task_list(request, id=None):
             return response_json(False, status.HTTP_404_NOT_FOUND, "Task Doesn't Exist", None)
         
         data = {
+            "id": task.id,
             "project_id": task.project_id.id,
             "assigned_user_id": task.assigned_user_id.id,
             "title": task.title,
@@ -28,6 +29,7 @@ def task_list(request, id=None):
         
         data = [
             {
+                "id": task.id,
                 "assigned_user_id": task.assigned_user_id.id,
                 "project_id": task.project_id.id,
                 "title": task.title,
@@ -84,6 +86,7 @@ def task_store(request, payload, id=None):
             )
             
         data = {
+            "id": task.id,
             "title": task.title,
             "description": task.description,
             "project_id": task.project_id.id,

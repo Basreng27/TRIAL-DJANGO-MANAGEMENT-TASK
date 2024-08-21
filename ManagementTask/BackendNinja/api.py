@@ -12,6 +12,8 @@ from .modules.projects.schema import ProjectSchema
 from .modules.projects.project import project_list, project_store, project_delete
 from .modules.tasks.schema import TaskSchema
 from .modules.tasks.task import task_list, task_store, task_delete
+from .modules.categories.schema import CategorySchema
+from .modules.categories.category import category_list, category_store, category_delete
 
 api = NinjaAPI()
 
@@ -81,3 +83,24 @@ def update(request, payload:TaskSchema, id: int):
 @api.delete("/task/{id}", auth=auth)
 def update(request, id: int):
     return task_delete(request, id=id)
+
+# Category
+@api.get("/category", auth=auth)
+def get_list(request):
+    return category_list(request)
+
+@api.get("/category/{id}", auth=auth)
+def get(request, id: int):
+    return category_list(request, id=id)
+
+@api.post("/category", auth=auth)
+def create(request, payload:CategorySchema):
+    return category_store(request, payload=payload)
+
+@api.put("/category/{id}", auth=auth)
+def update(request, payload:CategorySchema, id: int):
+    return category_store(request, payload=payload, id=id)
+
+@api.delete("/category/{id}", auth=auth)
+def update(request, id: int):
+    return category_delete(request, id=id)
