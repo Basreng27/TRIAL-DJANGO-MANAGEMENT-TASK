@@ -1,8 +1,6 @@
 from ninja import NinjaAPI
 from ninja.security import HttpBearer
 from .models import BlacklistedToken
-from ManagementTask.helpers import response_json
-from rest_framework import status
 from jwt import decode as jwt_decode, exceptions, ExpiredSignatureError
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -16,6 +14,8 @@ from .modules.categories.schema import CategorySchema
 from .modules.categories.category import category_list, category_store, category_delete
 from .modules.task_categories.schema import TaskCategorySchema
 from .modules.task_categories.task_category import task_category_list, task_category_store, task_category_delete
+from .modules.labels.schema import LabelSchema
+from .modules.labels.label import label_list, label_store, label_delete
 
 api = NinjaAPI()
 
@@ -127,3 +127,24 @@ def update(request, payload:TaskCategorySchema, id: int):
 @api.delete("/task_category/{id}", auth=auth)
 def update(request, id: int):
     return task_category_delete(request, id=id)
+
+# Label
+@api.get("/label", auth=auth)
+def get_list(request):
+    return label_list(request)
+
+@api.get("/label/{id}", auth=auth)
+def get(request, id: int):
+    return label_list(request, id=id)
+
+@api.post("/label", auth=auth)
+def create(request, payload:LabelSchema):
+    return label_store(request, payload=payload)
+
+@api.put("/label/{id}", auth=auth)
+def update(request, payload:LabelSchema, id: int):
+    return label_store(request, payload=payload, id=id)
+
+@api.delete("/label/{id}", auth=auth)
+def update(request, id: int):
+    return label_delete(request, id=id)

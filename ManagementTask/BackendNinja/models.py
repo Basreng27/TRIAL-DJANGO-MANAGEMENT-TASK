@@ -35,7 +35,7 @@ class TaskCategories(models.Model):
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     category_id = models.ForeignKey(Categories, on_delete=models.CASCADE)
 
-# Table Labels:
+# Table Labels: (Done)
 class Labels(models.Model):
     name = models.TextField()
     color = models.CharField(max_length=50)
