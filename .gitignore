@@ -9,7 +9,7 @@
 
 # Ignore File
 ManagementTask/settings.py
-ManagementTask/pulbic/
+ManagementTask/pulbic/*
 # Ignore File Except important.log
 # *.log
 # !important.log
