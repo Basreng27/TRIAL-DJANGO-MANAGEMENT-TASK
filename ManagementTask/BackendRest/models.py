@@ -30,5 +30,5 @@ class ActivityLogs(models.Model):
 class FileAttachments(models.Model):
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     project_id = models.ForeignKey(Projects, on_delete=models.CASCADE)
-    file = models.ImageField(upload_to='files/', blank=True, null=True)
+    file = models.ImageField(upload_to='ManagementTask/public/files/', blank=True, null=True)
     uploaded_at = models.DateTimeField(default=timezone.now)
