@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from ManagementTask.constant import ListConstant
 from django.utils import timezone
 
-# Table ProjectMembers:
+# Table ProjectMembers: (Done)
 class ProjectMembers(models.Model):
     project_id = models.ForeignKey(Projects, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

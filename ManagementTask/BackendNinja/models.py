@@ -42,7 +42,7 @@ class Labels(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
     
-# Table TaskLabels:
+# Table TaskLabels: (Done)
 class TaskLabels(models.Model):
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     label_id = models.ForeignKey(Labels, on_delete=models.CASCADE)

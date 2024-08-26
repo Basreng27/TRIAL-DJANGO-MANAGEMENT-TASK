@@ -1,5 +1,3 @@
-# from django.http import JsonResponse
-
 def response_json(status:bool, code, message:str=None, data:any=None):
     if not message:
         message = "Successfully"
