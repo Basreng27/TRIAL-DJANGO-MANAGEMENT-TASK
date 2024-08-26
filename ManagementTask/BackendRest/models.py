@@ -18,7 +18,7 @@ class Notifications(models.Model):
     content = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
-    
+
 # Table ActivityLogs:
 class ActivityLogs(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
