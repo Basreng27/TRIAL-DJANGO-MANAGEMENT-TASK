@@ -2,31 +2,31 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from ManagementTask.helpers import response_json
 from django.shortcuts import get_object_or_404
-from ...models import Notifications
-from .serializers import NotificationSerializer
+from ...models import ActivityLogs
+from .serializers import ActivityLogSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from django.db import IntegrityError, DatabaseError
 
-class Notification(APIView):
+class ActivityLog(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request, *args, **kwargs):
         id = kwargs.get('id')
         
         if id:
-            notification = get_object_or_404(Notifications, id=id)
+            activity_log = get_object_or_404(ActivityLogs, id=id)
             status_many = False
         else:
-            notification = Notifications.objects.all()
+            activity_log = ActivityLogs.objects.all()
             status_many = True
             
-        serializer = NotificationSerializer(notification, many=status_many)
+        serializer = ActivityLogSerializer(activity_log, many=status_many)
         
         return Response(response_json(True, status.HTTP_200_OK, None, serializer.data))
     
     def post(self, request, *args, **kwargs):
-        serializer = NotificationSerializer(data=request.data)
+        serializer = ActivityLogSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
         try:
@@ -46,8 +46,8 @@ class Notification(APIView):
         if not id:
             return Response(response_json(False, status.HTTP_400_BAD_REQUEST, "ID is required for updating", None))
         
-        notification = get_object_or_404(Notifications, id=id)
-        serializer = NotificationSerializer(notification, data=request.data, partial=True)
+        activity_log = get_object_or_404(ActivityLogs, id=id)
+        serializer = ActivityLogSerializer(activity_log, data=request.data, partial=True)
         
         serializer.is_valid(raise_exception=True)
 
@@ -64,10 +64,10 @@ class Notification(APIView):
 
     def delete(self, request, *args, **kwargs):
         id = kwargs.get('id')
-        notification = get_object_or_404(Notifications, id=id)
+        activity_log = get_object_or_404(ActivityLogs, id=id)
         
         try:
-            notification.delete()
+            activity_log.delete()
             
             return Response(response_json(True, status.HTTP_200_OK, "Deleted Data", None))
         except IntegrityError as ie:

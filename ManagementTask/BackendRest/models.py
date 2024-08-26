@@ -12,14 +12,14 @@ class ProjectMembers(models.Model):
     joined_at = models.DateTimeField(default=timezone.now)
     resigned_at = models.DateTimeField(null=True)
 
-# Table Notifications:
+# Table Notifications: (Done)
 class Notifications(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now)
 
-# Table ActivityLogs:
+# Table ActivityLogs: (Done)
 class ActivityLogs(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
