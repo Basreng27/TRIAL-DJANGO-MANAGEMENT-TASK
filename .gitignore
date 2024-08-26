@@ -8,8 +8,7 @@
 *.tmp
 
 # Ignore File
-ManagementTask/settings.py
-ManagementTask/public/*
+ManagementTask/ManagementTask/public/*
 # Ignore File Except important.log
 # *.log
 # !important.log
