@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -28,6 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Load Assets
+STATIC_URL = '/assets/'
+STATICFILES_DIRS = [
+    BASE_DIR / "ManagementTask/public/assets",
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -82,7 +88,7 @@ ROOT_URLCONF = 'ManagementTask.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'Frontend/modules')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

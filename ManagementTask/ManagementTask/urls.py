@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-rest/', include('BackendRest.urls'), name='api-rest'),
     path('api-ninja/', api.urls, name='api-ninja'),
+    path('management-task/', include('Frontend.urls'), name='management-task'),
 ]
