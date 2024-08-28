@@ -35,6 +35,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "ManagementTask/public/assets",
 ]
 
+# Ignore Unlist URL
+# DEBUG = False
+# ALLOWED_HOSTS = ['*']
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -79,7 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'ManagementTask.middleware.NotFoundMiddleware'
+    'ManagementTask.middleware.NotFoundMiddleware',
 ]
 
 ROOT_URLCONF = 'ManagementTask.urls'
