@@ -84,6 +84,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'ManagementTask.middleware.NotFoundMiddleware',
+    'ManagementTask.middleware.JWTAuthMiddleware',
 ]
 
 ROOT_URLCONF = 'ManagementTask.urls'
