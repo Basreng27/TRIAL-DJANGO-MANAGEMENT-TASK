@@ -48,9 +48,10 @@ class JWTAuthMiddleware:
                     return JsonResponse({'error': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
         else:
             token = request.COOKIES.get('access_token')
-
+            
             paths = [
-                reverse('login')
+                reverse('login'),
+                reverse('process-login')
             ]
             
             if token:
@@ -60,7 +61,7 @@ class JWTAuthMiddleware:
                     request.user = User.objects.get(id=user_id)
                 except Exception:
                     response = HttpResponseRedirect('/management-task/')
-                    response.delete_cookie('access_token') # Hapus cookie
+                    response.delete_cookie('access_token')
                     
                     return response
             else:

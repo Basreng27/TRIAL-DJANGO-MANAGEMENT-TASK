@@ -74,14 +74,30 @@ def login_process(request):
                 response = HttpResponse(response_json(status=True, code=status.HTTP_200_OK, message="Successfully Login"))
 
                 response.set_cookie('access_token', tokens['access'], httponly=True)
-                response.set_cookie('access_token_api_rest', token_rest['data']['access_rest'], httponly=True)
-                response.set_cookie('access_token_api_ninja', token_ninja['data']['token'], httponly=True)
+                # response.set_cookie('access_token_api_rest', token_rest['data']['access_rest'], httponly=True)
+                # response.set_cookie('access_token_api_ninja', token_ninja['data']['token'], httponly=True)
 
-                # return response
-                return redirect('dashboard')
+                return response
             else:
                 return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Wrong Username Or Password")
         else:
             return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Empty Username Or Password")
 
     return redirect('login')
+
+def logout_process(request):
+    response = HttpResponse(response_json(status=True, code=status.HTTP_200_OK, message="Successfully Logout"))
+    
+    response.delete_cookie('access_token')
+    
+    refresh_token = request.COOKIES.get('refresh_token')
+
+    if refresh_token:
+        try:
+            token = RefreshToken(refresh_token)
+            
+            token.blacklist()
+        except Exception as e:
+            return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Failed Logout")
+
+    return response
