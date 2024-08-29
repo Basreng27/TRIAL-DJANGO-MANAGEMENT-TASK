@@ -48,9 +48,9 @@ class JWTAuthMiddleware:
                     return JsonResponse({'error': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
         else:
             token = request.COOKIES.get('access_token')
-            
+
             paths = [
-                reverse('page-login')
+                reverse('login')
             ]
             
             if token:
@@ -65,7 +65,7 @@ class JWTAuthMiddleware:
                     return response
             else:
                 if request.path not in paths:
-                    return redirect('page-login')
+                    return redirect('login')
         
         if not hasattr(request, 'user'):
             from django.contrib.auth.models import AnonymousUser

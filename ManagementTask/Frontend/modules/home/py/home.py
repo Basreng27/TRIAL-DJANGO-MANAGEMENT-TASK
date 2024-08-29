@@ -1,6 +1,4 @@
-def data_home():
-    data = {
+def home_data():
+    return {
         'title': 'Dashboard'
     }
-
-    return data
