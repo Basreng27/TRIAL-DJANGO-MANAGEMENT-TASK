@@ -47,6 +47,15 @@ class TaskLabels(models.Model):
     task_id = models.ForeignKey(Tasks, on_delete=models.CASCADE)
     label_id = models.ForeignKey(Labels, on_delete=models.CASCADE)
     
+# Table BlackListToken: (Done)
 class BlacklistedToken(models.Model):
     token = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+# Table Menus: (Done)
+class Menus(models.Model):
+    parent_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    name = models.CharField(max_length=255)
+    url = models.CharField(max_length=255)
+    icon = models.CharField(max_length=255)
+    sequence = models.IntegerField()

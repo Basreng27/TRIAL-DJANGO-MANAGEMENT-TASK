@@ -29,7 +29,8 @@ class JWTAuthMiddleware:
             token = request.COOKIES.get('access_token') or request.headers.get('Authorization')
             
             paths = [
-                reverse('login')
+                reverse('login'),
+                '/api-ninja/login'
             ]
 
             if token:
@@ -51,6 +52,7 @@ class JWTAuthMiddleware:
             
             paths = [
                 reverse('login'),
+                reverse('page-login'),
                 reverse('process-login')
             ]
             
@@ -66,7 +68,7 @@ class JWTAuthMiddleware:
                     return response
             else:
                 if request.path not in paths:
-                    return redirect('login')
+                    return redirect('page-login')
         
         if not hasattr(request, 'user'):
             from django.contrib.auth.models import AnonymousUser

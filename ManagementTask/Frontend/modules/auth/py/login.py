@@ -96,7 +96,7 @@ def login_process(request):
 def logout_process(request):
     response = HttpResponse(
         JsonResponse(
-            response_json(status=True, code=status.HTTP_200_OK, message="Successfully Logout", title="Logout", url="login")
+            response_json(status=True, code=status.HTTP_200_OK, message="Successfully Logout", title="Logout", url="page-login")
         )
     )
     
