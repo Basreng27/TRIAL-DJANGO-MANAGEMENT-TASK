@@ -5,7 +5,7 @@ from rest_framework import status
 from ...form import LoginForm
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 
@@ -71,7 +71,11 @@ def login_process(request):
 
                 tokens = get_token(user)
                 
-                response = HttpResponse(response_json(status=True, code=status.HTTP_200_OK, message="Successfully Login"))
+                response = HttpResponse(
+                    JsonResponse(
+                        response_json(status=True, code=status.HTTP_200_OK, message="Successfully Login", title="Login", url="dashboard")
+                    )
+                )
 
                 response.set_cookie('access_token', tokens['access'], httponly=True)
                 # response.set_cookie('access_token_api_rest', token_rest['data']['access_rest'], httponly=True)
@@ -79,14 +83,22 @@ def login_process(request):
 
                 return response
             else:
-                return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Wrong Username Or Password")
+                return JsonResponse(
+                    response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Wrong Username Or Password", title="Login")
+                )
         else:
-            return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Empty Username Or Password")
+            return JsonResponse(
+                response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Empty Username Or Password", title="Login")
+            )
 
     return redirect('login')
 
 def logout_process(request):
-    response = HttpResponse(response_json(status=True, code=status.HTTP_200_OK, message="Successfully Logout"))
+    response = HttpResponse(
+        JsonResponse(
+            response_json(status=True, code=status.HTTP_200_OK, message="Successfully Logout", title="Logout", url="login")
+        )
+    )
     
     response.delete_cookie('access_token')
     
