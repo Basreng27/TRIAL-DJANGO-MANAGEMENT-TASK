@@ -1,4 +1,7 @@
 def home_data():
     return {
-        'title': 'Dashboard'
+        'title': 'Dashboard',
+        'breadcrumbs':{
+            'Dashboard',
+        }
     }

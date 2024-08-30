@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .modules.home.py.home import home_data
 from .modules.auth.py.login import login_data, login_process, logout_process
+from .modules.menu.py.menu import menu_data
 
 def page_login(request):
     return render(request, 'auth/pages/login.html', login_data(request=request))
@@ -16,3 +17,6 @@ def dashboard(request):
 
 def not_found_404(request, exception):
     return render(request, 'template/pages/404.html')
+
+def menu(request):
+    return render(request, 'menu/pages/display.html', menu_data())

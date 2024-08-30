@@ -7,4 +7,6 @@ urlpatterns = [
     path('logout', logout, name='logout'),
     
     path('dashboard', dashboard, name='dashboard'),
+    
+    path('menu', menu, name='menu'),
 ]

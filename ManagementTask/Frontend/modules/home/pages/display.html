@@ -5,7 +5,13 @@
         <h1>{{ title }}</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">{{ title }}</li>
+                {% for breadcrumb in breadcrumbs %}
+                    {% if forloop.last %}
+                        <li class="breadcrumb-item active">{{ breadcrumb }}</li>
+                    {% else %}
+                        <li class="breadcrumb-item">{{ breadcrumb }}</li>
+                    {% endif %}
+                {% endfor %}
             </ol>
         </nav>
     </div>

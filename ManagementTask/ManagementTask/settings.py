@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-vi8-t_ulvi%^+06tx*c)njhpi3+zr0&7apvy^-eu3pd9y!giln
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Ignore Unlist URL
-DEBUG = False # For Production run with python manage.py runserver --insecure
-# DEBUG = True
+# DEBUG = False # For Production run with python manage.py runserver --insecure
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # Load Assets
