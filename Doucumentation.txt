@@ -32,3 +32,9 @@
 
 => Install Requests For URL
     pip install requests
+
+=> Collect Static file
+    python manage.py collectstatic
+=> For Production Run
+    python manage.py runserver --insecure
+

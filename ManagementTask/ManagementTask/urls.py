@@ -24,3 +24,5 @@ urlpatterns = [
     path('api-ninja/', api.urls, name='api-ninja'),
     path('management-task/', include('Frontend.urls'), name='management-task'),
 ]
+
+handler404 = 'Frontend.views.not_found_404'

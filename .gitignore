@@ -7,6 +7,8 @@
 *.log
 *.tmp
 
+ManagementTask/staticfiles/
+
 # Ignore File
 ManagementTask/ManagementTask/public/files
 # Ignore File Except important.log

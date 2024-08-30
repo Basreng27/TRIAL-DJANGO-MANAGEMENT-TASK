@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import redirect
+import re
 
 User = get_user_model()
 
@@ -57,6 +58,9 @@ class JWTAuthMiddleware:
             ]
             
             if token:
+                if request.path in paths:
+                    return redirect('dashboard')
+
                 try:
                     access = AccessToken(token)
                     user_id = access['user_id']

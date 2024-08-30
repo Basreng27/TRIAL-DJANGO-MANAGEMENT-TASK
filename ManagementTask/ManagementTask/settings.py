@@ -25,19 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vi8-t_ulvi%^+06tx*c)njhpi3+zr0&7apvy^-eu3pd9y!giln'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+# Ignore Unlist URL
+DEBUG = False # For Production run with python manage.py runserver --insecure
+# DEBUG = True
+ALLOWED_HOSTS = ['*']
 
 # Load Assets
 STATIC_URL = '/assets/'
 STATICFILES_DIRS = [
     BASE_DIR / "ManagementTask/public/assets",
 ]
-
-# Ignore Unlist URL
-# DEBUG = False
-# ALLOWED_HOSTS = ['*']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Rest Framework
 REST_FRAMEWORK = {
