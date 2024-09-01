@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .modules.home.py.home import home_data
 from .modules.auth.py.login import login_data, login_process, logout_process
-from .modules.menu.py.menu import menu_form, menu_page, menu_delete
+from .modules.menu.py.menu import menu_form, menu_page, menu_delete, menu_child
 
 def page_login(request):
     return render(request, 'auth/pages/login.html', login_data(request=request))
@@ -20,6 +20,9 @@ def dashboard(request):
 
 def menu(request):
     return menu_page(request)
+
+def child_menu(request, id):
+    return menu_child(request, id)
 
 def form_menu(request, id=None):
     return menu_form(request, id)

@@ -1,3 +1,5 @@
+{% load static %}
+
 <table class="table table-striped">
     <thead>
         <tr>
@@ -32,3 +34,7 @@
         {% endfor %}
     </tbody>
 </table>
+
+<button type="button" class="btn btn-success form-modal" data-bs-toggle="modal" data-bs-target="#modal-form" data-url="{% url 'form-menu' %}"><i class="bi bi-plus-lg"></i> Add</button>
+
+<script src="{% static 'js/custom.js' %}"></script>

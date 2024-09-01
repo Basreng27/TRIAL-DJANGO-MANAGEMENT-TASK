@@ -179,13 +179,17 @@ def update(request, id: int):
 def get_list(request):
     return menu_list(request)
 
-@api.get("/menu_parent", auth=auth)
-def get_list(request):
-    return menu_parent_list(request)
-
 @api.get("/menu/{id}", auth=auth)
 def get(request, id: int):
     return menu_list(request, id=id)
+
+@api.get("/menu_parent", auth=auth)
+def get_parent_list(request):
+    return menu_parent_list(request)
+
+@api.get("/menu_parent/{id}", auth=auth)
+def get_parent_list(request, id: int):
+    return menu_parent_list(request, id=id)
 
 @api.post("/menu", auth=auth)
 def create(request, payload:MenuSchema):

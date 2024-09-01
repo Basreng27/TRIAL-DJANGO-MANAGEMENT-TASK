@@ -37,36 +37,21 @@ def menu_list(request, id=None):
 
 def menu_parent_list(request, id=None):
     if id:
-        try:
-            menus = Menus.objects.get(parent_id=id)
-        except Menus.DoesNotExist:
-            return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Menu Doesn't Exist")
-
-        data = [
-            {
-                "id": menu.id,
-                "parent_id": menu.parent_id.id if menu.parent_id else menu.parent_id,
-                "name": menu.name,
-                "url": menu.url,
-                "icon": menu.icon,
-                "sequence": menu.sequence,
-            }
-            for menu in menus
-        ]
+        menus = Menus.objects.filter(parent_id=id)
     else:
         menus = Menus.objects.filter(parent_id__isnull=True)
-        
-        data = [
-            {
-                "id": menu.id,
-                "parent_id": menu.parent_id.id if menu.parent_id else menu.parent_id,
-                "name": menu.name,
-                "url": menu.url,
-                "icon": menu.icon,
-                "sequence": menu.sequence,
-            }
-            for menu in menus
-        ]
+    
+    data = [
+        {
+            "id": menu.id,
+            "parent_id": menu.parent_id.id if menu.parent_id else menu.parent_id,
+            "name": menu.name,
+            "url": menu.url,
+            "icon": menu.icon,
+            "sequence": menu.sequence,
+        }
+        for menu in menus
+    ]
 
     return response_json(status=True, code=status.HTTP_200_OK, data=data)
 

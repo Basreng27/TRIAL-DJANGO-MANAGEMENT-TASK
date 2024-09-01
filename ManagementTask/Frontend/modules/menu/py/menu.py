@@ -16,7 +16,7 @@ def menu_page(request):
     headers = {'Authorization': f'Bearer {token}'}
 
     response = requests.get(f'{settings.API_NINJA}menu_parent', headers=headers)
-    
+
     if response.status_code == 200:
         menus = response.json()
 
@@ -30,6 +30,27 @@ def menu_page(request):
         }
         
         return render(request, 'menu/pages/display.html', data)
+    else:
+        return response_frontend(status=False, code=status.HTTP_404_NOT_FOUND, title="Menu")
+
+def menu_child(request, id):
+    token = request.COOKIES.get('access_token_api_ninja')
+
+    if not token:
+        return response_frontend(status=False, code=status.HTTP_401_UNAUTHORIZED, title="Menu", message='Undifined Token')
+    headers = {'Authorization': f'Bearer {token}'}
+
+    response = requests.get(f'{settings.API_NINJA}menu_parent/{id}', headers=headers)
+
+    if response.status_code == 200:
+        menus = response.json()
+
+        data = {
+            'data': menus['data'],
+            'parent_id': id
+        }
+        
+        return render(request, 'menu/pages/table_child.html', data)
     else:
         return response_frontend(status=False, code=status.HTTP_404_NOT_FOUND, title="Menu")
     
@@ -59,7 +80,7 @@ def menu_form(request, id=None):
         
         if form.is_valid():
             data_input = {
-                'parent_id': form.cleaned_data['parent_id'],
+                'parent_id': form.cleaned_data['parent_id'].id if form.cleaned_data['parent_id'] else None,
                 'name': form.cleaned_data['name'],
                 'url': form.cleaned_data['url'],
                 'icon': form.cleaned_data['icon'],
@@ -72,7 +93,7 @@ def menu_form(request, id=None):
             else:
                 response = requests.post(f'{settings.API_NINJA}menu', json=data_input, headers=headers)
                 status_type = 'Added'
-            
+
             if response.status_code in [200, 201]:
                 return response_frontend(status=True, code=status.HTTP_200_OK, title="Menu", url='menu', message=f'Successfully {status_type} Data')
             else:
