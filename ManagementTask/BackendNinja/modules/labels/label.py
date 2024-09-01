@@ -9,7 +9,7 @@ def label_list(request, id=None):
         try:
             label = Labels.objects.get(id=id)
         except Labels.DoesNotExist:
-            return response_json(False, status.HTTP_404_NOT_FOUND, "Label Doesn't Exist", None)
+            return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Label Doesn't Exist")
         
         data = {
             "id": label.id,
@@ -32,7 +32,7 @@ def label_list(request, id=None):
             for label in labels
         ]
         
-    return response_json(True, status.HTTP_200_OK, None, data)
+    return response_json(status=True, code=status.HTTP_200_OK, data=data)
 
 def label_store(request, payload, id=None):
     try:
@@ -40,7 +40,7 @@ def label_store(request, payload, id=None):
             try:
                 label = Labels.objects.get(id=id)
             except Labels.DoesNotExist:
-                return response_json(False, status.HTTP_404_NOT_FOUND, "Label Doesn't Exist", None)
+                return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Label Doesn't Exist")
             
             label.name = payload.name
             label.color = payload.color
@@ -60,27 +60,27 @@ def label_store(request, payload, id=None):
             "color": label.color,
         }
         
-        return response_json(True, status.HTTP_200_OK, None, data)
+        return response_json(status=True, code=status.HTTP_200_OK, data=data)
     except IntegrityError as ie:
-        return response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None)
+        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}")
     except DatabaseError as de:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}")
     except Exception as e:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}")
     
 def label_delete(request, id):
     try:
         data = Labels.objects.get(id=id)
     except Labels.DoesNotExist:
-        return response_json(False, status.HTTP_404_NOT_FOUND, "Label Doesn't Exist", None)
+        return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Label Doesn't Exist")
     
     try:
         data.delete()
     
-        return response_json(True, status.HTTP_200_OK, "Deleted Data", None)
+        return response_json(status=True, code=status.HTTP_200_OK, message="Deleted Data")
     except IntegrityError as ie:
-        return response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None)
+        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}")
     except DatabaseError as de:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}")
     except Exception as e:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}")

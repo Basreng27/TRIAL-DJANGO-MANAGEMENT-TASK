@@ -21,11 +21,11 @@ class Logout(APIView):
             # Ambil token refresh dari header Authorization
             token = request.data.get('access')
             if token is None:
-                return response_json(False, status.HTTP_400_BAD_REQUEST, "Refresh token not provided")
+                return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Refresh token not provided")
             
             # Tambahkan token ke blacklist
             RefreshToken(token).blacklist()
 
-            return response_json(True, status.HTTP_205_RESET_CONTENT, "Logged out successfully")
+            return response_json(status=True, code=status.HTTP_205_RESET_CONTENT, message="Logged out successfully")
         except TokenError:
-            return response_json(False, status.HTTP_400_BAD_REQUEST, "Token is invalid or expired")
+            return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Token is invalid or expired")

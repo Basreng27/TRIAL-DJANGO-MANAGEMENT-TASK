@@ -18,7 +18,7 @@ def login_process(request, payload):
         )
 
         if user is None:
-            return response_json(False, status.HTTP_400_BAD_REQUEST, "Username or Password is Incorrect", None)
+            return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Username or Password is Incorrect")
         
         expiration = datetime.utcnow() + timedelta(hours=3)
         token = encode({
@@ -30,12 +30,12 @@ def login_process(request, payload):
             "token": token
         }
         
-        return response_json(True, status.HTTP_200_OK, None, data)
+        return response_json(status=True, code=status.HTTP_200_OK, data=data)
     except User.DoesNotExist:
-        return response_json(False, status.HTTP_400_BAD_REQUEST, "Username or Password is Incorrect", token)
+        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Username or Password is Incorrect")
 
 def logout_process(request):
     token = request.headers.get("Authorization").split(" ")[1]
     BlacklistedToken.objects.create(token=token)
     
-    return response_json(True, status.HTTP_200_OK, "Success Logout", None)
+    return response_json(status=True, code=status.HTTP_200_OK, message="Success Logout")

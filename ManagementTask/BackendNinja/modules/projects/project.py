@@ -3,17 +3,14 @@ from ManagementTask.helpers import response_json
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.db import IntegrityError, DatabaseError
-# from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 def project_list(request, id=None):
     if id :
-        # project = get_object_or_404(Projects, id=id)
-        
         try:
             project = Projects.objects.get(id=id)
         except Projects.DoesNotExist:
-            return response_json(False, status.HTTP_404_NOT_FOUND, "Project Doesn't Exist", None)
+            return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Project Doesn't Exist")
         
         data = {
             "id": project.id,
@@ -38,20 +35,20 @@ def project_list(request, id=None):
             for project in projects
         ]
     
-    return response_json(True, status.HTTP_200_OK, None, data)
+    return response_json(status=True, code=status.HTTP_200_OK, data=data)
 
 def project_store(request, payload, id=None):
     try:
         try:
             user = User.objects.get(id=payload.user_id)
         except User.DoesNotExist:
-            return response_json(False, status.HTTP_404_NOT_FOUND, "User Doesn't Exist", None)
+            return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="User Doesn't Exist")
         
         if id :
             try:
                 project = Projects.objects.get(id=id)
             except Projects.DoesNotExist:
-                return response_json(False, status.HTTP_404_NOT_FOUND, "Project Doesn't Exist", None)
+                return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Project Doesn't Exist")
             
             project.user_id = user
             project.name = payload.name
@@ -74,27 +71,27 @@ def project_store(request, payload, id=None):
             "description": project.description,
         }
         
-        return response_json(True, status.HTTP_200_OK, None, data)
+        return response_json(status=True, code=status.HTTP_200_OK, data=data)
     except IntegrityError as ie:
-        return response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None)
+        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}")
     except DatabaseError as de:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}")
     except Exception as e:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}")
     
 def project_delete(request, id):
     try:
         data = Projects.objects.get(id=id)
     except Projects.DoesNotExist:
-        return response_json(False, status.HTTP_404_NOT_FOUND, "Project Doesn't Exist", None)
+        return response_json(status=False, code=status.HTTP_404_NOT_FOUND, message="Project Doesn't Exist")
     
     try:
         data.delete()
     
-        return response_json(True, status.HTTP_200_OK, "Deleted Data", None)
+        return response_json(status=True, code=status.HTTP_200_OK, message="Deleted Data")
     except IntegrityError as ie:
-        return response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None)
+        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}")
     except DatabaseError as de:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}")
     except Exception as e:
-        return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None)
+        return response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}")

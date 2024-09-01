@@ -23,7 +23,7 @@ class Notification(APIView):
             
         serializer = NotificationSerializer(notification, many=status_many)
         
-        return Response(response_json(True, status.HTTP_200_OK, None, serializer.data))
+        return Response(response_json(status=True, code=status.HTTP_200_OK, data=serializer.data))
     
     def post(self, request, *args, **kwargs):
         serializer = NotificationSerializer(data=request.data)
@@ -32,19 +32,19 @@ class Notification(APIView):
         try:
             serializer.save()
             
-            return Response(response_json(True, status.HTTP_201_CREATED, None, serializer.data))
+            return Response(response_json(status=True, code=status.HTTP_201_CREATED, data=serializer.data))
         except IntegrityError as ie:
-            return Response(response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None))
+            return Response(response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}"))
         except DatabaseError as de:
-            return Response(response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None))
+            return Response(response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}"))
         except Exception as e:
-            return Response(response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None))
+            return Response(response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}"))
 
     def put(self, request, *args, **kwargs):
         id = kwargs.get('id')
         
         if not id:
-            return Response(response_json(False, status.HTTP_400_BAD_REQUEST, "ID is required for updating", None))
+            return Response(response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="ID is required for updating"))
         
         notification = get_object_or_404(Notifications, id=id)
         serializer = NotificationSerializer(notification, data=request.data, partial=True)
@@ -54,13 +54,13 @@ class Notification(APIView):
         try:
             serializer.save()
             
-            return Response(response_json(True, status.HTTP_201_CREATED, None, serializer.data))
+            return Response(response_json(status=True, code=status.HTTP_201_CREATED, data=serializer.data))
         except IntegrityError as ie:
-            return Response(response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None))
+            return Response(response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}"))
         except DatabaseError as de:
-            return Response(response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None))
+            return Response(response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}"))
         except Exception as e:
-            return Response(response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None))
+            return Response(response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}"))
 
     def delete(self, request, *args, **kwargs):
         id = kwargs.get('id')
@@ -69,10 +69,10 @@ class Notification(APIView):
         try:
             notification.delete()
             
-            return Response(response_json(True, status.HTTP_200_OK, "Deleted Data", None))
+            return Response(response_json(status=True, code=status.HTTP_200_OK, message="Deleted Data"))
         except IntegrityError as ie:
-            return Response(response_json(False, status.HTTP_400_BAD_REQUEST, f"Integrity Error: {str(ie)}", None))
+            return Response(response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message=f"Integrity Error: {str(ie)}"))
         except DatabaseError as de:
-            return Response(response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Database Error: {str(de)}", None))
+            return Response(response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Database Error: {str(de)}"))
         except Exception as e:
-            return Response(response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, f"Unexpected Error: {str(e)}", None))
+            return Response(response_json(status=False, code=status.HTTP_500_INTERNAL_SERVER_ERROR, message=f"Unexpected Error: {str(e)}"))

@@ -5,7 +5,6 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import redirect
-import re
 
 User = get_user_model()
 

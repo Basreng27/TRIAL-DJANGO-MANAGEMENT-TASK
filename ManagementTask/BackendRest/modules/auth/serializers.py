@@ -24,7 +24,7 @@ class LoginSerializer(TokenObtainPairSerializer):
             'access_ninja': str(ninja_token['data']['token']),
         }
         
-        return response_json(True, status.HTTP_200_OK, None, data)
+        return response_json(status=True, code=status.HTTP_200_OK, data=data)
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -56,7 +56,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         try:
             user.save()
 
-            # return response_json(True, status.HTTP_201_CREATED, None, user)
             return user
         except DatabaseError as db_error:
             return response_json(False, status.HTTP_500_INTERNAL_SERVER_ERROR, str(db_error), None)
