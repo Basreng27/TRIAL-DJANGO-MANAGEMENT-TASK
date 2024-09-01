@@ -9,4 +9,7 @@ urlpatterns = [
     path('dashboard', dashboard, name='dashboard'),
     
     path('menu', menu, name='menu'),
+    path('menu-form', form_menu, name='form-menu'),
+    path('menu-form/<int:id>', form_menu, name='form-menu-update'),
+    path('menu-delete/<int:id>', delete_menu, name='delete-menu'),
 ]

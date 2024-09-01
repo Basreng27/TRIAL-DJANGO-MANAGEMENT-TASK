@@ -44,6 +44,9 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Custom Variable
+API_NINJA = 'http://localhost:8000/api-ninja/'
+
 # Set JWT Token
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),

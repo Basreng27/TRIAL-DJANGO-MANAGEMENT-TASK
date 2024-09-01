@@ -1,11 +1,11 @@
 import json
 import requests
-from ManagementTask.helpers import response_json
+from ManagementTask.helpers import response_frontend
 from rest_framework import status
 from ...form import LoginForm
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 
@@ -23,7 +23,7 @@ def get_token_ninja(username, password):
     if response.status_code == 200:
         return response.json()
     else:
-        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST)
+        return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST)
 
 def get_token_rest(username, password):
     url = f'{base_url}api-rest/login'
@@ -37,7 +37,7 @@ def get_token_rest(username, password):
     if response.status_code == 200:
         return response.json()
     else:
-        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST)
+        return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST)
 
 def get_token(user):
     refresh = RefreshToken.for_user(user)
@@ -48,7 +48,7 @@ def get_token(user):
             'access': str(refresh.access_token),
         }
     else:
-        return response_json(status=False, code=status.HTTP_400_BAD_REQUEST)
+        return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST)
 
 def login_data(request=None):
     return {
@@ -71,34 +71,22 @@ def login_process(request):
 
                 tokens = get_token(user)
                 
-                response = HttpResponse(
-                    JsonResponse(
-                        response_json(status=True, code=status.HTTP_200_OK, message="Successfully Login", title="Login", url="dashboard")
-                    )
-                )
+                response = HttpResponse(response_frontend(status=True, code=status.HTTP_200_OK, message="Successfully Login", title="Login", url="dashboard"))
 
                 response.set_cookie('access_token', tokens['access'], httponly=True)
-                # response.set_cookie('access_token_api_rest', token_rest['data']['access_rest'], httponly=True)
-                # response.set_cookie('access_token_api_ninja', token_ninja['data']['token'], httponly=True)
+                response.set_cookie('access_token_api_rest', token_rest['data']['access_rest'], httponly=True)
+                response.set_cookie('access_token_api_ninja', token_ninja['data']['token'], httponly=True)
 
                 return response
             else:
-                return JsonResponse(
-                    response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Wrong Username Or Password", title="Login")
-                )
+                return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST, message="Wrong Username Or Password", title="Login")
         else:
-            return JsonResponse(
-                response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Empty Username Or Password", title="Login")
-            )
+            return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST, message="Empty Username Or Password", title="Login")
 
     return redirect('login')
 
 def logout_process(request):
-    response = HttpResponse(
-        JsonResponse(
-            response_json(status=True, code=status.HTTP_200_OK, message="Successfully Logout", title="Logout", url="page-login")
-        )
-    )
+    response = HttpResponse(response_frontend(status=True, code=status.HTTP_200_OK, message="Successfully Logout", title="Logout", url="page-login") )
     
     response.delete_cookie('access_token')
     
@@ -110,6 +98,6 @@ def logout_process(request):
             
             token.blacklist()
         except Exception as e:
-            return response_json(status=False, code=status.HTTP_400_BAD_REQUEST, message="Failed Logout")
+            return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST, message="Failed Logout")
 
     return response

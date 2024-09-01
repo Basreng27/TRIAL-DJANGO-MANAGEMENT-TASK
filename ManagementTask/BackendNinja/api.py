@@ -19,7 +19,7 @@ from .modules.labels.label import label_list, label_store, label_delete
 from .modules.task_labels.schema import TaskLabelSchema
 from .modules.task_labels.task_label import task_label_list, task_label_store, task_label_delete
 from .modules.menus.schema import MenuSchema
-from .modules.menus.menu import menu_list, menu_store, menu_delete
+from .modules.menus.menu import menu_list, menu_store, menu_delete, menu_parent_list
 
 api = NinjaAPI()
 
@@ -178,6 +178,10 @@ def update(request, id: int):
 @api.get("/menu", auth=auth)
 def get_list(request):
     return menu_list(request)
+
+@api.get("/menu_parent", auth=auth)
+def get_list(request):
+    return menu_parent_list(request)
 
 @api.get("/menu/{id}", auth=auth)
 def get(request, id: int):

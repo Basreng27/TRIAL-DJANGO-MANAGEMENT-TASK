@@ -59,3 +59,6 @@ class Menus(models.Model):
     url = models.CharField(max_length=255)
     icon = models.CharField(max_length=255)
     sequence = models.IntegerField()
+    
+    def __str__(self):
+        return self.name
