@@ -1,6 +1,6 @@
 <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link " href="{% url 'dashboard' %}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
@@ -19,6 +19,36 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
+
+        {% for m in menu %}
+            {% if m.url == '#' and m.child %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#components-nav-{{ m.id }}" data-bs-toggle="collapse" href="#">
+                        <i class="{{ m.icon }}"></i>
+                        <span>{{ m.name }}</span>
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    
+                    <ul id="components-nav-{{ m.id }}" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                        {% for c in m.child %}
+                            <li>
+                                <a href="{% if c.url and c.url != '#' %}{% url c.url %}{% else %}#{% endif %}">
+                                    <i class="{{ c.icon }}"></i>
+                                    <span>{{ c.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{% if m.url and m.url != '#' %}{{ m.url }}{% else %}#{% endif %}">
+                        <i class="{{ m.icon }}"></i>
+                        <span>{{ m.name }}</span>
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
     </ul>
 </aside> 

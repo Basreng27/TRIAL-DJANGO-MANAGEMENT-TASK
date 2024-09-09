@@ -1,11 +1,11 @@
 import requests
-from django.shortcuts import get_object_or_404, render
-from BackendNinja.models import Menus
+from django.shortcuts import render
 from ...form import MenuForm
 from django.urls import reverse
 from rest_framework import status
 from ManagementTask.helpers import response_frontend
 from django.conf import settings
+from ...template.py.core import Core
 
 def menu_page(request):
     token = request.COOKIES.get('access_token_api_ninja')
@@ -29,7 +29,7 @@ def menu_page(request):
             'data': menus['data']
         }
         
-        return render(request, 'menu/pages/display.html', data)
+        return Core.load_template(request=request, url='menu/pages/display.html', data=data)
     else:
         return response_frontend(status=False, code=status.HTTP_404_NOT_FOUND, title="Menu")
 
