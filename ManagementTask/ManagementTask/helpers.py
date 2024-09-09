@@ -31,3 +31,15 @@ def response_frontend(status:bool, code, message:str=None, data:any=None, title=
         'redirect': url,
         'data': data if data else None
     })
+    
+def get_url_name(url):
+    from urllib.parse import urlparse
+    
+    parsed_url = urlparse(url)
+    path = parsed_url.path
+    path_parts = path.split('/')
+    
+    if len(path_parts) > 1:
+        return path_parts[-1]
+    
+    return None

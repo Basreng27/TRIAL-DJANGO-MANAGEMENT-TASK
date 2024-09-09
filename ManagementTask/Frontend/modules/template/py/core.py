@@ -1,12 +1,13 @@
 import requests
 from django.shortcuts import render
-from ManagementTask.helpers import response_frontend
+from ManagementTask.helpers import response_frontend, get_url_name
 from rest_framework import status
 from django.conf import settings
 
 class Core:    
     def load_template(request, url, data:None):
         data['menu'] = request.session.get('menu', [])
+        data['url_name'] = get_url_name(request.build_absolute_uri())
         
         return render(request, url, data)
         
