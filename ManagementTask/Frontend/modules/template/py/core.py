@@ -6,6 +6,12 @@ from django.conf import settings
 
 class Core:    
     def load_template(request, url, data:None):
+        data['menu'] = request.session.get('menu', [])
+        
+        return render(request, url, data)
+        
+        
+    def set_session_menu(request):
         token = request.COOKIES.get('access_token_api_ninja')
         
         if not token:
@@ -27,9 +33,6 @@ class Core:
                 
                 tamp.append(m)
             
-            data['menu'] = tamp 
-            
-            return render(request, url, data)
+            request.session['menu'] = tamp
         else:
             return response_frontend(status=False, code=status.HTTP_404_NOT_FOUND, title="Menu")
-        

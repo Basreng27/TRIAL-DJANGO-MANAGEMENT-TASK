@@ -8,6 +8,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from ...template.py.core import Core
 
 base_url = 'http://localhost:8000/'
 
@@ -77,6 +78,8 @@ def login_process(request):
                 response.set_cookie('access_token_api_rest', token_rest['data']['access_rest'], httponly=True)
                 response.set_cookie('access_token_api_ninja', token_ninja['data']['token'], httponly=True)
 
+                Core.set_session_menu(request)
+                
                 return response
             else:
                 return response_frontend(status=False, code=status.HTTP_400_BAD_REQUEST, message="Wrong Username Or Password", title="Login")
