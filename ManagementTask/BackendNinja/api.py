@@ -20,6 +20,8 @@ from .modules.task_labels.schema import TaskLabelSchema
 from .modules.task_labels.task_label import task_label_list, task_label_store, task_label_delete
 from .modules.menus.schema import MenuSchema
 from .modules.menus.menu import menu_list, menu_store, menu_delete, menu_parent_list
+from .modules.users.schema import UserSchema
+from .modules.users.user import user_list, user_store, user_delete
 
 api = NinjaAPI()
 
@@ -174,7 +176,7 @@ def update(request, payload:TaskLabelSchema, id: int):
 def update(request, id: int):
     return task_label_delete(request, id=id)
 
-# Task Category
+# Menu Category
 @api.get("/menu", auth=auth)
 def get_list(request):
     return menu_list(request)
@@ -202,3 +204,24 @@ def update(request, payload:MenuSchema, id: int):
 @api.delete("/menu/{id}", auth=auth)
 def update(request, id: int):
     return menu_delete(request, id=id)
+
+# User Category
+@api.get("/user", auth=auth)
+def get_list(request):
+    return user_list(request)
+
+@api.get("/user/{id}", auth=auth)
+def get(request, id: int):
+    return user_list(request, id=id)
+
+@api.post("/user", auth=auth)
+def create(request, payload:UserSchema):
+    return user_store(request, payload=payload)
+
+@api.put("/user/{id}", auth=auth)
+def update(request, payload:UserSchema, id: int):
+    return user_store(request, payload=payload, id=id)
+
+@api.delete("/user/{id}", auth=auth)
+def update(request, id: int):
+    return user_delete(request, id=id)

@@ -1,0 +1,32 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for d in data %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ d.first_name }} {{ d.last_name }}</td>
+                <td>{{ d.username }}</td>
+                <td>{{ d.email }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary form-modal" data-bs-toggle="modal" data-bs-target="#modal-form" data-url="{% url 'form-user-update' d.id %}"><i class="bi bi-pencil-square"></i></button>
+                    <button type="button" class="btn btn-danger delete" data-url="{% url 'delete-user' d.id %}"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+
+            <tr id="child-row-{{ d.id }}" style="display:none;">
+                <td colspan="6">
+                    <div id="child-{{ d.id }}"></div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -41,3 +41,25 @@ class MenuForm(forms.ModelForm):
         super(MenuForm, self).__init__(*args, **kwargs)
         
         self.fields['parent_id'].empty_label = '--Select--'
+        
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'email': 'Email',
+            'username': 'Username',
+            'password': 'Password',
+        }
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}), 
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}), 
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+        }
+        help_texts = {
+            'username': None,
+        }
